@@ -47,7 +47,7 @@ namespace System.Windows
 
                 if (IsSealed)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "DataTrigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, nameof(DataTrigger)));
                 }
 
                 _binding = value;
