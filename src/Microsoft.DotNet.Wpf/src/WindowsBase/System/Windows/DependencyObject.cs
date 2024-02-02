@@ -89,7 +89,7 @@ namespace System.Windows
         ///     though the effective value for a property may change.
         /// </summary>
         [FriendAccessAllowed] // Built into Base, also used by Framework.
-        internal virtual void Seal()
+        protected internal virtual void Seal()
         {
             Debug.Assert(!(this is Freezable), "A Freezable should not call DO's implementation of Seal()");
 
@@ -2609,7 +2609,7 @@ namespace System.Windows
         /// <summary>
         ///     InheritanceContext
         /// </summary>
-        internal virtual DependencyObject InheritanceContext
+        protected internal virtual DependencyObject InheritanceContext
         {
             [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
             get { return null; }
@@ -2629,7 +2629,7 @@ namespace System.Windows
         ///     ProvideSelfAsInheritanceContext, which checks various
         ///     preconditions and then calls AddInheritanceContext for you.
         /// </remarks>
-        internal virtual void AddInheritanceContext(DependencyObject context, DependencyProperty property)
+        protected internal virtual void AddInheritanceContext(DependencyObject context, DependencyProperty property)
         {
         }
 
@@ -2642,7 +2642,7 @@ namespace System.Windows
         ///     RemoveSelfAsInheritanceContext, which checks various
         ///     preconditions and then calls RemoveInheritanceContext for you.
         /// </remarks>
-        internal virtual void RemoveInheritanceContext(DependencyObject context, DependencyProperty property)
+        protected internal virtual void RemoveInheritanceContext(DependencyObject context, DependencyProperty property)
         {
         }
 
@@ -2775,7 +2775,7 @@ namespace System.Windows
         /// <summary>
         ///     By default this is false since it doesn't have a context
         /// </summary>
-        internal virtual bool HasMultipleInheritanceContexts
+        protected internal virtual bool HasMultipleInheritanceContexts
         {
             get { return false; }
         }

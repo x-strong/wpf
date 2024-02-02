@@ -21,9 +21,12 @@ namespace System.Windows
     ///     A single Style data conditional dependency driver
     /// </summary>
     [ContentProperty("Setters")]
-    [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")] 
+    [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     public class DataTrigger : TriggerBase, IAddChild
     {
+        public virtual LogicalOp Relation { get; set; } = LogicalOp.Equals;
+
+
         /// <summary>
         ///     Binding declaration of the conditional
         /// </summary>
@@ -139,7 +142,7 @@ namespace System.Windows
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
 
-        internal sealed override void Seal()
+        protected internal override void Seal()
         {
             if (IsSealed)
             {
@@ -156,7 +159,7 @@ namespace System.Windows
             TriggerConditions = new TriggerCondition[] {
                 new TriggerCondition(
                     _binding,
-                    LogicalOp.Equals,
+                    Relation,
                     _value) };
 
             // Set Condition for all data triggers
@@ -222,5 +225,3 @@ namespace System.Windows
         }
     }
 }
-
-
