@@ -3,8 +3,8 @@
 
 name: .NET
 
-on:
-  push:
+on: [push]
+ # push:
  #   branches: [ "NewLife/8.0" ]
  # pull_request:
  #   branches: [ "NewLife/8.0" ]
