@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "NewLife/8.0" ]
-  pull_request:
-    branches: [ "NewLife/8.0" ]
+ #   branches: [ "NewLife/8.0" ]
+ # pull_request:
+ #   branches: [ "NewLife/8.0" ]
 
 jobs:
   build:
