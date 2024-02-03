@@ -5697,7 +5697,7 @@ namespace System.Windows
     //
     //  Describes the value stored in the PropertyValue structure
     //
-    internal enum PropertyValueType : int
+    public enum PropertyValueType : int
     {
         Set                       = ValueLookupType.Simple,
         Trigger                   = ValueLookupType.Trigger,
@@ -5832,11 +5832,11 @@ namespace System.Windows
     //  Conditions set on [Multi]Trigger are stored
     //  in structures of this kind
     //
-    internal struct TriggerCondition
+    public class TriggerCondition
     {
         #region Construction
 
-        internal TriggerCondition(DependencyProperty dp, LogicalOp logicalOp, object value, string sourceName)
+        public TriggerCondition(DependencyProperty dp, LogicalOp logicalOp, object value, string sourceName)
         {
             Property = dp;
             Binding = null;
@@ -5847,13 +5847,13 @@ namespace System.Windows
             BindingValueCache = new BindingValueCache(null, null);
         }
 
-        internal TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value) :
+        public TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value) :
             this(binding, logicalOp, value, StyleHelper.SelfName)
         {
             // Call Forwarded
         }
 
-        internal TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value, string sourceName)
+        public TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value, string sourceName)
         {
             Property = null;
             Binding = binding;
@@ -5865,12 +5865,12 @@ namespace System.Windows
         }
 
         // Check for match
-        internal bool Match(object state)
+        protected internal virtual bool Match(object state)
         {
             return Match(state, Value);
         }
 
-        private bool Match(object state, object referenceValue)
+        protected internal virtual bool Match(object state, object referenceValue)
         {
             if (LogicalOp == LogicalOp.Equals)
             {
@@ -5884,7 +5884,7 @@ namespace System.Windows
 
         // Check for match, after converting the reference value to the type
         // of the state value.  (Used by data triggers)
-        internal bool ConvertAndMatch(object state)
+        protected internal virtual bool ConvertAndMatch(object state)
         {
             // convert the reference value to the type of 'state',
             // provided the reference value is a string and the
@@ -5954,7 +5954,7 @@ namespace System.Windows
 
         // Implemented for #1038821, FxCop ConsiderOverridingEqualsAndOperatorEqualsOnValueTypes
         //  Called from ChildValueLookup.Equals, avoid boxing by not using the generic object-based Equals.
-        internal bool TypeSpecificEquals( TriggerCondition value )
+        protected internal virtual bool TypeSpecificEquals( TriggerCondition value )
         {
             if( Property            == value.Property &&
                 Binding             == value.Binding &&
@@ -5969,39 +5969,43 @@ namespace System.Windows
 
         #endregion Construction
 
-        internal readonly DependencyProperty        Property;
-        internal readonly BindingBase               Binding;
-        internal readonly LogicalOp                 LogicalOp;
-        internal readonly object                    Value;
-        internal readonly string                    SourceName;
-        internal          int                       SourceChildIndex;
-        internal          BindingValueCache         BindingValueCache;
+        protected internal readonly DependencyProperty        Property;
+        protected internal readonly BindingBase               Binding;
+        protected internal readonly LogicalOp                 LogicalOp;
+        protected internal readonly object                    Value;
+        protected internal readonly string                    SourceName;
+        protected internal          int                       SourceChildIndex;
+        protected internal          BindingValueCache         BindingValueCache;
     }
 
     //
     //  This is a data-structure used to prevent threading issues while setting
     //  BindingValueType and ValueAsBindingValueType as separate members.
     //
-    internal class BindingValueCache
+    public class BindingValueCache
     {
-        internal BindingValueCache(Type bindingValueType, object valueAsBindingValueType)
+        protected internal BindingValueCache(Type bindingValueType, object valueAsBindingValueType)
         {
             BindingValueType = bindingValueType;
             ValueAsBindingValueType = valueAsBindingValueType;
         }
 
-        internal readonly Type   BindingValueType;
-        internal readonly object ValueAsBindingValueType;
+        protected internal readonly Type   BindingValueType;
+        protected internal readonly object ValueAsBindingValueType;
     }
 
     //
     //  Describes the logical operation to be used to test the
     //  condition of a [Multi]Trigger
     //
-    internal enum LogicalOp
+    public enum LogicalOp
     {
+        LessThan,
+        LessThanOrEquals,
         Equals,
-        NotEquals
+        GreaterThanOrEquals,
+        GreaterThan,
+        NotEquals,
     }
 
     //
@@ -6152,7 +6156,149 @@ namespace System.Windows
         int _index;         // the index in the ItemStructList<ChildValueLookup>
     }
 
+    public class IntValueTriggerCondition: TriggerCondition {
+        public IntValueTriggerCondition(DependencyProperty dp, LogicalOp logicalOp, Object value, String sourceName) : base(dp, logicalOp, value, sourceName)
+        {
+        }
+
+        public IntValueTriggerCondition(BindingBase binding, LogicalOp logicalOp, Object value) : base(binding, logicalOp, value)
+        {
+        }
+
+        public IntValueTriggerCondition(BindingBase binding, LogicalOp logicalOp, Object value, String sourceName) : base(binding, logicalOp, value, sourceName)
+        {
+        }
+
+        protected internal override bool Match(object state, object referenceValue)
+        {
+            var value1 = (int)state;
+            var value2 = (int)referenceValue;
+
+            if (LogicalOp == LogicalOp.LessThan)
+            {
+                return value1 < value2;
+            }
+
+            if (LogicalOp == LogicalOp.LessThanOrEquals)
+            {
+                return value1 <= value2;
+            }
+
+            if (LogicalOp == LogicalOp.Equals)
+            {
+                return value1 == value2;
+            }
+
+            if (LogicalOp == LogicalOp.GreaterThanOrEquals)
+            {
+                return value1 >= value2;
+            }
+
+            if (LogicalOp == LogicalOp.GreaterThan)
+            {
+                return value1 > value2;
+            }
+
+            return value1 != value2;
+        }
+    }
+
+    public class FloatValueTriggerCondition : TriggerCondition
+    {
+        public FloatValueTriggerCondition(DependencyProperty dp, LogicalOp logicalOp, Object value, String sourceName) : base(dp, logicalOp, value, sourceName)
+        {
+        }
+
+        public FloatValueTriggerCondition(BindingBase binding, LogicalOp logicalOp, Object value) : base(binding, logicalOp, value)
+        {
+        }
+
+        public FloatValueTriggerCondition(BindingBase binding, LogicalOp logicalOp, Object value, String sourceName) : base(binding, logicalOp, value, sourceName)
+        {
+        }
+
+        protected internal override bool Match(object state, object referenceValue)
+        {
+            var value1 = (float)state;
+            var value2 = (float)referenceValue;
+
+            if (LogicalOp == LogicalOp.LessThan)
+            {
+                return value1 < value2;
+            }
+
+            if (LogicalOp == LogicalOp.LessThanOrEquals)
+            {
+                return value1 <= value2;
+            }
+
+            if (LogicalOp == LogicalOp.Equals)
+            {
+                return value1 == value2;
+            }
+
+            if (LogicalOp == LogicalOp.GreaterThanOrEquals)
+            {
+                return value1 >= value2;
+            }
+
+            if (LogicalOp == LogicalOp.GreaterThan)
+            {
+                return value1 > value2;
+            }
+
+            return value1 != value2;
+        }
+
+    }
+
+    public class DoubleValueTriggerCondition : TriggerCondition
+    {
+        public DoubleValueTriggerCondition(DependencyProperty dp, LogicalOp logicalOp, Object value, String sourceName) : base(dp, logicalOp, value, sourceName)
+        {
+        }
+
+        public DoubleValueTriggerCondition(BindingBase binding, LogicalOp logicalOp, Object value) : base(binding, logicalOp, value)
+        {
+        }
+
+        public DoubleValueTriggerCondition(BindingBase binding, LogicalOp logicalOp, Object value, String sourceName) : base(binding, logicalOp, value, sourceName)
+        {
+        }
+
+        protected internal override bool Match(object state, object referenceValue)
+        {
+            var value1 = (double)state;
+            var value2 = (double)referenceValue;
+
+            if (LogicalOp == LogicalOp.LessThan)
+            {
+                return value1 < value2;
+            }
+
+            if (LogicalOp == LogicalOp.LessThanOrEquals)
+            {
+                return value1 <= value2;
+            }
+
+            if (LogicalOp == LogicalOp.Equals)
+            {
+                return value1 == value2;
+            }
+
+            if (LogicalOp == LogicalOp.GreaterThanOrEquals)
+            {
+                return value1 >= value2;
+            }
+
+            if (LogicalOp == LogicalOp.GreaterThan)
+            {
+                return value1 > value2;
+            }
+
+            return value1 != value2;
+        }
+
+    }
     #endregion DataStructures
 }
-
-

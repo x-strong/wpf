@@ -80,7 +80,7 @@ namespace System.Windows
         {
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
-        
+
         /// <summary>
         ///     The Event that will activate this trigger - one must be specified
         /// before an event trigger is meaningful.
@@ -114,7 +114,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        ///     The x:Name of the object whose event shall trigger this 
+        ///     The x:Name of the object whose event shall trigger this
         /// EventTrigger.   If null, then this is the object being Styled
         /// and not anything under its Style.VisualTree.
         /// </summary>
@@ -156,7 +156,7 @@ namespace System.Windows
         ///     The collection of actions to activate when the Event occurs.
         /// At least one action is required for the trigger to be meaningful.
         /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]        
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public TriggerActionCollection Actions
         {
             get
@@ -208,8 +208,8 @@ namespace System.Windows
 
         ///////////////////////////////////////////////////////////////////////
         // Internal members
-        
-        internal sealed override void Seal()
+
+        protected internal sealed override void Seal()
         {
             if( PropertyValues.Count > 0 )
             {
@@ -237,7 +237,7 @@ namespace System.Windows
         private RoutedEvent _routedEvent = null;
 
         // Name of the Style.VisualTree node whose event to listen to.
-        //  May remain the default value of null, which  means the object being 
+        //  May remain the default value of null, which  means the object being
         //  Styled is the target instead of something within the Style.VisualTree.
         private string _sourceName = null;
 
@@ -259,7 +259,7 @@ namespace System.Windows
 
         // This is the SourceId-ed element.
         FrameworkElement _source;
-        
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -267,7 +267,7 @@ namespace System.Windows
         //  in attached storage of other objects.
         //
         // Called when the FrameworkElement and the tree structure underneath it has been
-        //  built up.  This is the earliest point we can resolve all the child 
+        //  built up.  This is the earliest point we can resolve all the child
         //  node identification that may exist in a Trigger object.
         // This should be moved to base class if PropertyTrigger support is added.
         internal static void ProcessTriggerCollection( FrameworkElement triggersHost )
@@ -277,7 +277,7 @@ namespace System.Windows
             {
                 // Don't seal the collection, because we allow it to change.  We will,
                 // however, seal each of the triggers.
-                
+
                 for( int i = 0; i < triggerCollection.Count; i++ )
                 {
                     ProcessOneTrigger( triggersHost, triggerCollection[i] );
@@ -289,9 +289,9 @@ namespace System.Windows
         ////////////////////////////////////////////////////////////////////////
         // ProcessOneTrigger
         //
-        // Find the target element for this trigger, and set a listener for 
+        // Find the target element for this trigger, and set a listener for
         // the event into (pointing back to the trigger).
-        
+
         internal static void ProcessOneTrigger( FrameworkElement triggersHost, TriggerBase triggerBase )
         {
             // This code path is used in the element trigger case.  We don't actually
@@ -301,12 +301,12 @@ namespace System.Windows
             //  Seal(), the RoutedEvent setter will check to see if the handler has
             //  already been created and refuse an update if so.
             // triggerBase.Seal();
-            
+
             EventTrigger eventTrigger = triggerBase as EventTrigger;
             if( eventTrigger != null )
             {
                 Debug.Assert( eventTrigger._routedEventHandler == null && eventTrigger._source == null);
-                
+
                 // PERF: Cache this result if it turns out we're doing a lot of lookups on the same name.
                 eventTrigger._source = FrameworkElement.FindNamedFrameworkElement( triggersHost, eventTrigger.SourceName );
 
@@ -344,7 +344,7 @@ namespace System.Windows
 
             }
         }
-        
+
         ////////////////////////////////////////////////////////////////////////
         //
         // DisconnectOneTrigger
@@ -355,7 +355,7 @@ namespace System.Windows
         internal static void DisconnectOneTrigger( FrameworkElement triggersHost, TriggerBase triggerBase )
         {
             EventTrigger eventTrigger = triggerBase as EventTrigger;
-            
+
             if( eventTrigger != null )
             {
                 eventTrigger._source.RemoveHandler( eventTrigger.RoutedEvent, eventTrigger._routedEventHandler);
@@ -390,6 +390,6 @@ namespace System.Windows
             private EventTrigger     _owningTrigger;
             private FrameworkElement _owningTriggerHost;
         }
-        
+
     }
 }

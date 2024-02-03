@@ -21,7 +21,7 @@ namespace System.Windows
     ///     A single Style data conditional dependency driver
     /// </summary>
     [ContentProperty("Setters")]
-    [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")] 
+    [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     public class DataTrigger : TriggerBase, IAddChild
     {
         /// <summary>
@@ -139,7 +139,7 @@ namespace System.Windows
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
 
-        internal sealed override void Seal()
+        protected internal override void Seal()
         {
             if (IsSealed)
             {
@@ -185,7 +185,7 @@ namespace System.Windows
         }
 
         // evaluate the current state of the trigger
-        internal override bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
+        protected internal override bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
             Debug.Assert( TriggerConditions != null && TriggerConditions.Length == 1,
                 "This method assumes there is exactly one TriggerCondition." );
@@ -193,9 +193,9 @@ namespace System.Windows
             return TriggerConditions[0].ConvertAndMatch(StyleHelper.GetDataTriggerValue(dataField, container, TriggerConditions[0].Binding));
         }
 
-        private BindingBase _binding;
-        private object _value = DependencyProperty.UnsetValue;
-        private SetterBaseCollection _setters = null;
+        protected BindingBase _binding;
+        protected object _value = DependencyProperty.UnsetValue;
+        protected SetterBaseCollection _setters = null;
 
         public static void ReceiveMarkupExtension(object targetObject, XamlSetMarkupExtensionEventArgs eventArgs)
         {
@@ -216,5 +216,3 @@ namespace System.Windows
         }
     }
 }
-
-

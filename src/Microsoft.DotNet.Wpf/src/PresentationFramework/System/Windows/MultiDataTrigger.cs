@@ -89,7 +89,7 @@ namespace System.Windows
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
 
-        internal override void Seal()
+        protected internal override void Seal()
         {
             if (IsSealed)
             {
@@ -163,6 +163,3 @@ namespace System.Windows
         private SetterBaseCollection _setters = null;
     }
 }
-
-
-

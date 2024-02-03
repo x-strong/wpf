@@ -1087,6 +1087,7 @@
     <Compile Include="System\Windows\Documents\XamlToRtfWriter.cs" />
     <Compile Include="System\Windows\Documents\XPSS0ValidatingLoader.cs" />
     <Compile Include="System\Windows\Documents\ZoomPercentageConverter.cs" />
+    <Compile Include="System\Windows\DoubleValueTrigger.cs" />
     <Compile Include="System\Windows\DynamicResourceExtension.cs" />
     <Compile Include="System\Windows\DynamicResourceExtensionConverter.cs" />
     <Compile Include="System\Windows\EventSetter.cs" />
@@ -1095,6 +1096,7 @@
     <Compile Include="System\Windows\ExitEventArgs.cs" />
     <Compile Include="System\Windows\FigureLength.cs" />
     <Compile Include="System\Windows\FigureLengthConverter.cs" />
+    <Compile Include="System\Windows\FloatValueTrigger.cs" />
     <Compile Include="System\Windows\FontSizeConverter.cs" />
     <Compile Include="System\Windows\FrameworkCompatibilityPreferences.cs" />
     <Compile Include="System\Windows\FrameworkContentElement.cs" />
@@ -1124,6 +1126,7 @@
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />
     <Compile Include="System\Windows\Interop\IProgressPage.cs" />
     <Compile Include="System\Windows\Interop\WindowInteropHelper.cs" />
+    <Compile Include="System\Windows\IntValueTrigger.cs" />
     <Compile Include="System\Windows\IWindowService.cs" />
     <Compile Include="System\Windows\LengthConverter.cs" />
     <Compile Include="System\Windows\Localization.cs" />

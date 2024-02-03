@@ -41,8 +41,7 @@ namespace MS.Internal.YourAssemblyName
         AllowMultiple = false,
         Inherited = true)
     ]
-    internal sealed class FriendAccessAllowedAttribute : Attribute
+    public sealed class FriendAccessAllowedAttribute : Attribute
     {
     }
 }
-

@@ -222,7 +222,7 @@ namespace System.Windows
             PropertyValues.Add(propertyValue);
         }
 
-        internal override void Seal()
+        protected internal override void Seal()
         {
             // Verify Context Access
             VerifyAccess();
@@ -371,7 +371,7 @@ namespace System.Windows
         }
 
         // evaluate the current state of the trigger
-        internal virtual bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
+        protected internal virtual bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
             Debug.Assert( false,
                 "This method was written to handle Trigger, MultiTrigger, DataTrigger, and MultiDataTrigger.  It looks like a new trigger type was added - please add support as appropriate.");
@@ -380,7 +380,7 @@ namespace System.Windows
         }
 
         // Collection of TriggerConditions
-        internal TriggerCondition[] TriggerConditions
+        protected internal TriggerCondition[] TriggerConditions
         {
             get { return _triggerConditions; }
             set { _triggerConditions = value; }

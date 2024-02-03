@@ -19,7 +19,7 @@ namespace System.Windows
     ///     A single Style property conditional dependency driver
     /// </summary>
     [ContentProperty("Setters")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     public class Trigger : TriggerBase, IAddChild, ISupportInitialize
     {
         /// <summary>
@@ -191,7 +191,7 @@ namespace System.Windows
             return setter;
         }
 
-        internal sealed override void Seal()
+        protected internal sealed override void Seal()
         {
             if (IsSealed)
             {
@@ -321,4 +321,3 @@ namespace System.Windows
         private CultureInfo _cultureInfoForTypeConverter = null;
     }
 }
-

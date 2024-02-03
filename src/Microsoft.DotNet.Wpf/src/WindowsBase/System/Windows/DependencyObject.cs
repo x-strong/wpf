@@ -89,7 +89,7 @@ namespace System.Windows
         ///     though the effective value for a property may change.
         /// </summary>
         [FriendAccessAllowed] // Built into Base, also used by Framework.
-        internal virtual void Seal()
+        protected internal virtual void Seal()
         {
             Debug.Assert(!(this is Freezable), "A Freezable should not call DO's implementation of Seal()");
 
@@ -863,7 +863,7 @@ namespace System.Windows
             // on side-effects from setting the "Freezable context".  Freezable's
             // implementation does its own checks of the conditions omitted here.
             // Enhancement suggestion: Freezable should follow the same rules for
-            // InheritanceContext as everyone else 
+            // InheritanceContext as everyone else
 
 
             if (doValue != null &&
@@ -910,7 +910,7 @@ namespace System.Windows
             // on side-effects from setting the "Freezable context".  Freezable's
             // implementation does its own checks of the conditions omitted here.
             // Enhancement suggestion: Freezable should follow the same rules for
-            // InheritanceContext as everyone else 
+            // InheritanceContext as everyone else
 
 
             if (doValue != null &&
