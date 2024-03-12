@@ -1,11 +1,11 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: WPF.NewLife
 
-on: [push]
- # push:
- #   branches: [ "NewLife/8.0" ]
+on: # [push]
+    push:
+       branches: [ "NewLife/8.0" ]
  # pull_request:
  #   branches: [ "NewLife/8.0" ]
 
