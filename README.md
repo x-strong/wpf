@@ -3,6 +3,8 @@
 [![Build Status](https://dnceng.visualstudio.com/public/_apis/build/status/dotnet/wpf/dotnet-wpf%20CI)](https://dnceng.visualstudio.com/public/_build/latest?definitionId=270)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/dotnet/wpf/blob/main/LICENSE.TXT)
 
+build - [![.NET](https://github.com/x-strong/wpf/actions/workflows/dotnet.yml/badge.svg?branch=NewLife%2F8.0)](https://github.com/x-strong/wpf/actions/workflows/dotnet.yml)
+
 Windows Presentation Foundation (WPF) is a UI framework for building Windows desktop applications. 
 
 WPF supports a broad set of application development features, including an application model, resources, controls, graphics, layout, data binding and documents. WPF uses the Extensible Application Markup Language (XAML) to provide a declarative model for application programming.
